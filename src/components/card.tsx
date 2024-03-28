@@ -1,5 +1,9 @@
 import styled from "styled-components";
 import Star from "../assets/icons/rating-star.svg";
+import { Props } from "../utils/types";
+import { useContext } from "react";
+import { Context } from "../main";
+import { observer } from "mobx-react-lite";
 
 const SLi = styled.li`
   display: flex;
@@ -26,10 +30,25 @@ const SWrapper = styled.div`
   padding: 5px;
 `;
 
-const STitle = styled.p`
+const STitle = styled.a`
   grid-column: 1/ 2;
   grid-row: 1/1;
   font-weight: 600;
+  color: hsla(240, 16%, 13%, 1);
+  text-decoration: none;
+
+  &:hover {
+    color: hsla(37, 100%, 75%, 1);
+  }
+
+  &:active {
+    color: hsla(240, 16%, 13%, 1);
+  }
+
+  &:focus {
+    outline-color: rgba(218, 136, 3, 0.856);
+    color: hsla(240, 16%, 13%, 0.5);
+  }
 `;
 
 const SPrice = styled.span`
@@ -43,7 +62,9 @@ const SPrice = styled.span`
 const SInitialPrice = styled.span`
   position: absolute;
   top: 20px;
-  left: 0;
+  left: 10px;
+  font-size: 13px;
+  line-height: 15px;
   text-decoration: line-through;
   color: hsla(37, 100%, 75%, 1);
 `;
@@ -64,27 +85,50 @@ const SBuy = styled.button`
   font-weight: 600;
   border: none;
   background: none;
+  cursor: pointer;
+
+  &:hover {
+    color: hsla(37, 100%, 75%, 1);
+  }
+
+  &:active {
+    color: hsla(240, 16%, 13%, 1);
+  }
+
+  &:focus {
+    outline-color: rgba(218, 136, 3, 0.856);
+  }
 `;
 
-const Card = ({ props }) => {
+const Card = observer(({ props }: Props) => {
   const { id, img, title, price, initialPrice, rate } = props;
+  const { counter, device } = useContext(Context);
+
   return (
     <SLi key={id}>
       <SImg src={img}></SImg>
       <SWrapper>
-        <STitle>{title}</STitle>
+        <STitle href="#">{title}</STitle>
         <SPrice>
           {price} ₽{" "}
-          {initialPrice && <SInitialPrice>{initialPrice}</SInitialPrice>}
+          {initialPrice && <SInitialPrice>{initialPrice} ₽</SInitialPrice>}
         </SPrice>
         <SRate>
           <img src={Star} />
           {rate}
         </SRate>
-        <SBuy>Купить</SBuy>
+        <SBuy
+          onClick={() => {
+            counter.increase();
+            device.setOrders(props);
+            device.setTotalPrice(props.price);
+          }}
+        >
+          Купить
+        </SBuy>
       </SWrapper>
     </SLi>
   );
-};
+});
 
 export default Card;

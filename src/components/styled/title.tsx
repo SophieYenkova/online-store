@@ -11,6 +11,19 @@ const STitle = styled.p`
   font-weight: 700;
   line-height: 30px;
   color: hsla(0, 0%, 6%, 1);
+
+  &:hover {
+    color: hsla(37, 100%, 75%, 1);
+  }
+
+  &:active {
+    color: hsla(240, 16%, 13%, 1);
+  }
+
+  &:focus {
+    outline-color: rgba(218, 136, 3, 0.856);
+    color: hsla(240, 16%, 13%, 0.5);
+  }
 `;
 
 

@@ -1,8 +1,10 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, toJS } from "mobx";
 import { Types } from "../utils/types";
 
 export default class DeviceStore {
   _types: Array<Types>;
+  _orders: Array<Types>;
+  _totalPrice;
 
   constructor() {
     this._types = [
@@ -33,21 +35,21 @@ export default class DeviceStore {
             rate: 4.5,
           },
           {
-            id: 1,
+            id: 4,
             img: "assets/headphones.jpg",
             title: "Apple BYZ S852I",
             price: 2927,
             rate: 4.7,
           },
           {
-            id: 2,
+            id: 5,
             img: "./assets/headphones2.jpg",
             title: "Apple EarPods",
             price: 2327,
             rate: 4.5,
           },
           {
-            id: 3,
+            id: 6,
             img: "./assets/headphones3.jpg",
             title: "Apple EarPods",
             price: 2327,
@@ -84,6 +86,9 @@ export default class DeviceStore {
       },
     ];
 
+    this._orders = [];
+    this._totalPrice = 0;
+
     makeAutoObservable(this);
   }
 
@@ -91,7 +96,32 @@ export default class DeviceStore {
     this._types = types;
   }
 
+  setOrders(orders: Array<Types>) {
+    this._orders = [...this._orders, orders];
+  }
+
+  removeOrder(orderId) {
+    const currentOrder = this._orders.find((order) => order.id === orderId);
+    currentOrder
+      ? (this._totalPrice = this._totalPrice -= currentOrder.price)
+      : this._totalPrice;
+    this._orders = this._orders.filter((order) => order.id !== orderId);
+  }
+
+  setTotalPrice(price) {
+    this._totalPrice = Math.floor((this._totalPrice += Number(price)));
+  }
+
   get types() {
     return this._types;
+  }
+
+  get orders() {
+    console.log(this._orders);
+    return this._orders;
+  }
+
+  get totalPrice() {
+    return this._totalPrice;
   }
 }

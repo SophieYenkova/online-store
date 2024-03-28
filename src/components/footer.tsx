@@ -5,21 +5,31 @@ import { NavLink } from "react-router-dom";
 import { SHOP_ROUTE } from "../utils/consts";
 
 const SFooter = styled.footer`
+  position: fixed;
+  bottom: 0;
   display: flex;
   justify-content: space-between;
   padding: 29px;
   height: 149px;
+  min-width: 1110px;
   background-color: hsla(0, 0%, 100%, 1);
   border-radius: 30px 30px 0 0;
+  box-shadow: 0px 0px 20px 0px hsla(0, 0%, 0%, 0.1);
+`;
+
+const SNav = styled.nav`
+  display: flex;
+  flex-direction: column;
+  min-width: 35%;
 `;
 
 const SUl = styled.ul`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  min-width: 35%;
   align-content: space-between;
   list-style-type: none;
+  height: 100%;
 `;
 
 const SLi = styled.li`
@@ -29,6 +39,20 @@ const SLi = styled.li`
 const SLink = styled.a`
   display: block;
   color: hsla(0, 0%, 6%, 1);
+  text-decoration: none;
+
+  &:hover {
+    color: hsla(37, 100%, 75%, 1);
+  }
+
+  &:active {
+    color: hsla(240, 16%, 13%, 1);
+  }
+
+  &:focus {
+    outline-color: rgba(218, 136, 3, 0.856);
+    color: hsla(240, 16%, 13%, 0.5);
+  }
 `;
 
 const SLinks = styled.div`
@@ -57,7 +81,6 @@ const SSecondary = styled.span`
   font-weight: 500;
 `;
 
-
 const Footer = () => {
   return (
     <SFooter>
@@ -66,20 +89,30 @@ const Footer = () => {
         <Title>QPICK</Title>
       </NavLink>
 
-      <SUl>
-        <SLi>Избранное</SLi>
-        <SLi>Корзина</SLi>
-        <SLi>Контакты</SLi>
-        <SLi>Условия сервиса</SLi>
-        <SLi>
-          <SLangs>
-            <img src={LangImg} alt="" />
+      <SNav>
+        <SUl>
+          <SLi>
+            <SLink href="#">Избранное</SLink>
+          </SLi>
+          <SLi>
+            <SLink href="#">Корзина</SLink>
+          </SLi>
+          <SLi>
+            <SLink href="#">Контакты</SLink>
+          </SLi>
+          <SLi>
+            <SLink href="#">Условия сервиса</SLink>
+          </SLi>
+          <SLi>
+            <SLangs>
+              <img src={LangImg} alt="" />
 
-            <SPrimary>Рус</SPrimary>
-            <SSecondary>Eng</SSecondary>
-          </SLangs>
-        </SLi>
-      </SUl>
+              <SPrimary tabIndex={0}>Рус</SPrimary>
+              <SSecondary tabIndex={0}>Eng</SSecondary>
+            </SLangs>
+          </SLi>
+        </SUl>
+      </SNav>
       <SLinks>
         <SLink href="https://vk.com/">
           <svg
@@ -99,7 +132,7 @@ const Footer = () => {
           </svg>
         </SLink>
 
-        <SLink href="#">
+        <SLink href="https://t.me/telegram">
           <svg
             width="31"
             height="31"
@@ -116,7 +149,7 @@ const Footer = () => {
             />
           </svg>
         </SLink>
-        <SLink href="#">
+        <SLink href="https://www.whatsapp.com/">
           <svg
             width="31"
             height="31"

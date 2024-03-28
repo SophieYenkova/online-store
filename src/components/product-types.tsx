@@ -3,9 +3,8 @@ import { Context } from "../main";
 import { observer } from "mobx-react-lite";
 import styled from "styled-components";
 import { Types } from "../utils/types";
-import Card from "./card";
 import { toJS } from "mobx";
-// import Products from "./products";
+import Products from "./products";
 
 const SUl = styled.ul`
   display: flex;
@@ -32,9 +31,7 @@ const ProductTypes = observer(() => {
           <div className="" key={type.id}>
             <SLi>{type.name}</SLi>
             <SUl>
-              {type.devices.map((device) => {
-                return <Card key={device.id} props={toJS(device)}></Card>;
-              })}
+              <Products devices={toJS(type.devices)} />
             </SUl>
           </div>
         );

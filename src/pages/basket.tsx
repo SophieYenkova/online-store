@@ -1,5 +1,7 @@
+import BasketItems from "../components/basketItems";
+
 const Basket = () => {
-  return <div className="">Basket</div>;
+  return <BasketItems />;
 };
 
 export default Basket;
