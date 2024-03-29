@@ -102,7 +102,7 @@ const SBuy = styled.button`
 
 const Card = observer(({ props }: Props) => {
   const { id, img, title, price, initialPrice, rate } = props;
-  const { counter, device } = useContext(Context);
+  const { device } = useContext(Context);
 
   return (
     <SLi key={id}>
@@ -119,9 +119,8 @@ const Card = observer(({ props }: Props) => {
         </SRate>
         <SBuy
           onClick={() => {
-            counter.increase();
-            device.setOrders(props);
-            device.setTotalPrice(props.price);
+            // counter.increase();
+            device.setOrder(id);
           }}
         >
           Купить

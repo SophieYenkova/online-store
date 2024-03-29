@@ -25,14 +25,21 @@ const SPageTitle = styled.h1`
   margin-bottom: 13px;
 `;
 
-
-
 const BasketCards = observer(() => {
   const { device } = useContext(Context);
+  const ordersArray = toJS(device.orders) || [];
   return (
     <>
-      {device.orders.map((order) => {
-        return <BasketCard key={order.id} props={toJS(order)} />;
+      {ordersArray.map(([orderId, quantity]) => {
+        const order = device.types
+          .flatMap((type) => type.devices)
+          .find((device) => device.id === orderId);
+        if (order) {
+          return (
+            <BasketCard key={order.id} props={order} quantity={quantity} />
+          );
+        }
+        return null;
       })}
     </>
   );
@@ -46,7 +53,7 @@ const BasketItems = () => {
         <SCards>
           <BasketCards />
         </SCards>
-        <Total/>
+        <Total />
       </SPageWrapper>
     </>
   );

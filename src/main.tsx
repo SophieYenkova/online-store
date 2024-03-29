@@ -28,7 +28,7 @@ export const Context = createContext(null);
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Context.Provider
-      value={{device: new DeviceStore(), counter: new Counter() }}
+      value={{device: new DeviceStore()}}
     >
       <Global/>
       <App />

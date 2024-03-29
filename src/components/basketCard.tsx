@@ -139,7 +139,7 @@ const SItemPrice = styled.span`
   font-weight: 600;
 `;
 
-const BasketCard = observer(({ props }: Props) => {
+const BasketCard = observer(({ props = {}, quantity = 0 }: Props) => {
   const { device } = useContext(Context);
   const { id, img, title, price, initialPrice } = props;
   return (
@@ -154,7 +154,7 @@ const BasketCard = observer(({ props }: Props) => {
           </SPrice>
         </SWrapper>
         <SCounter>
-          <SDec type="button">
+          <SDec type="button" onClick={() => device.decreaseOrder(id)}>
             <svg
               width="30"
               height="30"
@@ -166,8 +166,8 @@ const BasketCard = observer(({ props }: Props) => {
               <path d="M8 14H22V16H8V14Z" fill="white" />
             </svg>
           </SDec>
-          <SNum>1</SNum>
-          <SInc type="button">
+          <SNum>{quantity}</SNum>
+          <SInc type="button" onClick={() => device.setOrder(id)}>
             <svg
               width="31"
               height="30"
@@ -184,7 +184,12 @@ const BasketCard = observer(({ props }: Props) => {
           </SInc>
         </SCounter>
         <SItemPrice>{price} ₽</SItemPrice>
-        <SDelete type="button" onClick={() => {device.removeOrder(id)}}>
+        <SDelete
+          type="button"
+          onClick={() => {
+            device.removeOrder(id);
+          }}
+        >
           <svg
             width="21"
             height="17"

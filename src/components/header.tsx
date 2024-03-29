@@ -52,7 +52,7 @@ const SCounter = styled.span`
 
 const Header = observer(() => {
   const navigate = useNavigate();
-  const { counter } = useContext(Context);
+  const { device } = useContext(Context);
   return (
     <SHeader>
       <NavLink to={SHOP_ROUTE} style={{ textDecoration: "none" }}>
@@ -88,7 +88,9 @@ const Header = observer(() => {
               fill="currentColor"
             />
           </svg>
-          {counter.itemsCount > 0 && <SCounter>{counter.itemsCount}</SCounter>}
+          {device.ordersQuantity > 0 ? (
+            <SCounter>{device.ordersQuantity}</SCounter>
+          ) : null}
         </SButton>
       </div>
     </SHeader>
