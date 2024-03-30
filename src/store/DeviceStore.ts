@@ -1,12 +1,12 @@
-import {  makeAutoObservable } from "mobx";
+import { makeAutoObservable } from "mobx";
 import { Types } from "../utils/types";
 
 export default class DeviceStore {
   _types: Array<Types>;
-  _orders: Array<Types>;
-  _totalPrice;
-  _map;
-  _ordersQuantity;
+  _orders: [number, number][];
+  _totalPrice: number;
+  _map: Map<any, any>;
+  _ordersQuantity: any;
 
   constructor() {
     this._types = [
@@ -93,40 +93,41 @@ export default class DeviceStore {
     this._map = new Map();
 
     makeAutoObservable(this);
-    this.loadCartFromLocalStorage();
-    const savedMap = localStorage.getItem("map");
+    this.loadCartFromSessionStorage();
+
+    const savedMap = sessionStorage.getItem("map");
     if (savedMap) {
       this._map = new Map(JSON.parse(savedMap));
     } else {
       this._map = new Map();
     }
 
-    const savedCartItems = localStorage.getItem("cartItems");
+    const savedCartItems = sessionStorage.getItem("cartItems");
     if (savedCartItems) {
       this._orders = JSON.parse(savedCartItems);
     }
 
-    const savedCartQuantity = localStorage.getItem("itemsCount");
+    const savedCartQuantity = sessionStorage.getItem("itemsCount");
     if (savedCartQuantity) {
       this._ordersQuantity = JSON.parse(savedCartQuantity);
     }
     this.calcTotalPrice();
   }
 
-  saveMapToLocalStorage() {
-    localStorage.setItem("map", JSON.stringify([...this._map]));
+  saveMapToSessionStorage() {
+    sessionStorage.setItem("map", JSON.stringify([...this._map]));
   }
 
-  saveCartToLocalStorage() {
-    localStorage.setItem("cartItems", JSON.stringify(this._orders));
+  saveCartToSessionStorage() {
+    sessionStorage.setItem("cartItems", JSON.stringify(this._orders));
   }
 
-  saveQuantityToLocalStorage() {
-    localStorage.setItem("itemsCount", JSON.stringify(this._ordersQuantity));
+  saveQuantityToSessionStorage() {
+    sessionStorage.setItem("itemsCount", JSON.stringify(this._ordersQuantity));
   }
 
-  saveTotalPriceToLocalStorage() {
-    localStorage.setItem("totalPrice", JSON.stringify(this._totalPrice));
+  saveTotalPriceToSessionStorage() {
+    sessionStorage.setItem("totalPrice", JSON.stringify(this._totalPrice));
   }
 
   calcOrdersQuantity() {
@@ -147,11 +148,11 @@ export default class DeviceStore {
         this._totalPrice += order.price * quantity;
       }
     });
-    this.saveTotalPriceToLocalStorage();
+    this.saveTotalPriceToSessionStorage();
   }
 
-  loadCartFromLocalStorage() {
-    const savedCartItems = localStorage.getItem("cartItems");
+  loadCartFromSessionStorage() {
+    const savedCartItems = sessionStorage.getItem("cartItems");
     if (savedCartItems) {
       this._orders = JSON.parse(savedCartItems);
     }
@@ -161,44 +162,47 @@ export default class DeviceStore {
     this._types = types;
   }
 
-  setOrder(orderId) {
+  refreshCalcs() {
+    this.calcOrdersQuantity();
+    this.calcTotalPrice();
+  }
+
+  refreshSessionStorage() {
+    this.saveCartToSessionStorage();
+    this.saveQuantityToSessionStorage();
+    this.saveMapToSessionStorage();
+  }
+
+  setOrder(orderId: number) {
     if (!this._map.has(orderId)) {
       this._map.set(orderId, 1);
     } else {
       this._map.set(orderId, this._map.get(orderId) + 1);
     }
     this._orders = [...this._map.entries()];
-    this.calcOrdersQuantity();
-    this.calcTotalPrice();
-    this.saveCartToLocalStorage();
-    this.saveQuantityToLocalStorage();
-    this.saveMapToLocalStorage();
+    this.refreshCalcs();
+    this.refreshSessionStorage();
   }
 
-  removeOrder(orderId) {
+  removeOrder(orderId: number) {
     if (this._map.has(orderId)) {
       this._map.delete(orderId);
       this._orders = [...this._map.entries()];
-      this.calcOrdersQuantity();
-      this.calcTotalPrice();
-      this.saveCartToLocalStorage();
-      this.saveQuantityToLocalStorage();
-      this.saveMapToLocalStorage();
+      this.refreshCalcs();
+      this.refreshSessionStorage();
     }
   }
 
-  decreaseOrder(orderId) {
+  decreaseOrder(orderId: number) {
     if (this._map.has(orderId)) {
       this._map.set(orderId, this._map.get(orderId) - 1);
       if (this._map.get(orderId) < 1) {
         this._map.delete(orderId);
       }
+
       this._orders = [...this._map.entries()];
-      this.calcOrdersQuantity();
-      this.calcTotalPrice();
-      this.saveCartToLocalStorage();
-      this.saveQuantityToLocalStorage();
-      this.saveMapToLocalStorage();
+      this.refreshCalcs();
+      this.refreshSessionStorage();
     }
   }
 

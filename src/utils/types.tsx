@@ -11,10 +11,12 @@ export interface Device {
   price: number;
   initialPrice?: number;
   rate: number;
-  count?: number;
 }
 
 export interface Props {
   props: Device;
+  quantity?: number;
   key: number;
 }
+
+

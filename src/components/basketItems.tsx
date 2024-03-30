@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
 import Total from "./total";
+import { Device, Types } from "../utils/types";
 
 const SPageWrapper = styled.div`
   display: flex;
@@ -30,15 +31,15 @@ const BasketCards = observer(() => {
   const ordersArray = toJS(device.orders) || [];
   return (
     <>
-      {ordersArray.map(([orderId, quantity]) => {
+      {ordersArray.map(([orderId, quantity] : [number, number]) => {
         const order = device.types
-          .flatMap((type) => type.devices)
-          .find((device) => device.id === orderId);
+          .flatMap((type: Types) => type.devices)
+          .find((device: Device) => device.id === orderId);
         if (order) {
           return (
             <BasketCard key={order.id} props={order} quantity={quantity} />
           );
-        }
+        } 
         return null;
       })}
     </>

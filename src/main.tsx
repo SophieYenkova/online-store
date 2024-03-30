@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import DeviceStore from "./store/DeviceStore.ts";
 import { createGlobalStyle } from 'styled-components'
-import Counter from "./store/Counter.ts";
+import { Device, Types } from "./utils/types.tsx";
 
 const Global = createGlobalStyle`
   *{
@@ -22,6 +22,11 @@ const Global = createGlobalStyle`
     height: 100%;
   }
 `
+interface Context {
+  null: object;
+}
+
+
 
 export const Context = createContext(null);
 
