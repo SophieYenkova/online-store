@@ -7,7 +7,7 @@ const Router = () => {
   return (
     <Routes>
       {publicRoutes.map(({ path, Component }) => (
-        <Route key={path} path={path} element={<Component />} exact />
+        <Route key={path} path={path} element={<Component />} caseSensitive />
       ))}
       <Route path="*" element={<Shop />} />
     </Routes>

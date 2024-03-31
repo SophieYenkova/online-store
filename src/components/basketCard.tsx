@@ -150,7 +150,7 @@ const SItemPrice = styled.span`
   }
 `;
 
-const BasketCard = observer(({ props = {}, quantity = 0 }: Props) => {
+const BasketCard = observer(({ props, quantity = 0 }: Props) => {
   const { device } = useContext(Context);
   const { id, img, title, price, initialPrice } = props;
   return (

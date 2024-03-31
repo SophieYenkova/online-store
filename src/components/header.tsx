@@ -88,7 +88,7 @@ const Header = observer(() => {
               fill="currentColor"
             />
           </svg>
-          {device.ordersQuantity > 0 ? (
+          {device.ordersQuantity !== undefined && device.ordersQuantity > 0 ? (
             <SCounter>{device.ordersQuantity}</SCounter>
           ) : null}
         </SButton>
