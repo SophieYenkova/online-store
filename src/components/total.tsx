@@ -36,6 +36,13 @@ const STransferButton = styled.div`
     outline: none;
     background-color: hsla(240, 16%, 13%, 0.5);
   }
+
+
+  @media (max-width: 768px) {
+    width: 100%;
+    left: 0;
+  }
+
 `;
 
 const STotal = styled.div`
@@ -48,6 +55,18 @@ const STotal = styled.div`
   background-color: hsla(0, 0%, 100%, 1);
   box-shadow: 0px 0px 20px 0px hsla(0, 0%, 0%, 0.1);
   border-radius: 30px;
+
+  @media (max-width: 1110px) {
+    position: sticky;
+    bottom: 30vh;
+  }
+
+  @media (max-width: 768px) {
+    bottom: 5vh;
+    left: 5%;
+    width: 90%;
+    margin-bottom: 5%;
+  }
 `;
 
 const STotalPrice = styled.div`

@@ -9,9 +9,14 @@ import Products from "./products";
 const SUl = styled.ul`
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 30px;
   padding: 20px 0;
   list-style-type: none;
+
+  @media (max-width: 768px) {
+    padding: 20px 20px;
+  }
 `;
 
 const SLi = styled.li`

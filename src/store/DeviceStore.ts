@@ -5,8 +5,8 @@ export default class DeviceStore {
   _types: Array<Types>;
   _orders: [number, number][];
   _totalPrice: number;
-  _map: Map<any, any>;
-  _ordersQuantity: any;
+  _map: Map<number, number>;
+  _ordersQuantity: number | undefined;
 
   constructor() {
     this._types = [
@@ -111,6 +111,7 @@ export default class DeviceStore {
     if (savedCartQuantity) {
       this._ordersQuantity = JSON.parse(savedCartQuantity);
     }
+
     this.calcTotalPrice();
   }
 
@@ -177,7 +178,7 @@ export default class DeviceStore {
     if (!this._map.has(orderId)) {
       this._map.set(orderId, 1);
     } else {
-      this._map.set(orderId, this._map.get(orderId) + 1);
+      this._map.set(orderId, (this._map.get(orderId) || 0) + 1);
     }
     this._orders = [...this._map.entries()];
     this.refreshCalcs();
@@ -195,8 +196,8 @@ export default class DeviceStore {
 
   decreaseOrder(orderId: number) {
     if (this._map.has(orderId)) {
-      this._map.set(orderId, this._map.get(orderId) - 1);
-      if (this._map.get(orderId) < 1) {
+      this._map.set(orderId, (this._map.get(orderId) || 0) - 1);
+      if ((this._map.get(orderId) || 0) < 1) {
         this._map.delete(orderId);
       }
 

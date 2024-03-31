@@ -3,7 +3,6 @@ import { Props } from "../utils/types";
 import { useContext } from "react";
 import { Context } from "../main";
 import { observer } from "mobx-react-lite";
-import { toJS } from "mobx";
 
 const SLi = styled.li`
   display: grid;
@@ -13,10 +12,17 @@ const SLi = styled.li`
   row-gap: 20px;
   padding: 18px 28px 15px 18px;
   width: 633px;
-  height: 218px;
   background-color: hsla(0, 0%, 100%, 1);
   border-radius: 30px;
   box-shadow: 0px 0px 20px 0px hsla(0, 0%, 0%, 0.1);
+
+  @media (max-width: 1110px) {
+    width: 390px;
+  }
+
+  @media (max-width: 768px) {
+    width: 87vw;
+  }
 `;
 
 const SImg = styled.img`
@@ -137,6 +143,11 @@ const SItemPrice = styled.span`
   grid-column: 3/4;
   grid-row: 2/3;
   font-weight: 600;
+
+  @media (max-width: 768px) {
+   font-size: 14px;
+   grid-column: span 2;
+  }
 `;
 
 const BasketCard = observer(({ props = {}, quantity = 0 }: Props) => {

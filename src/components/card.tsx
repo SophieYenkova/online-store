@@ -9,11 +9,17 @@ const SLi = styled.li`
   display: flex;
   flex-direction: column;
   padding: 15px;
-  width: 350px;
-  height: 407px;
   background-color: hsla(0, 0%, 100%, 1);
   border-radius: 30px;
   box-shadow: 0px 0px 20px 0px hsla(0, 0%, 0%, 0.1);
+
+  @media (min-width: 1110px) {
+    width: 350px;
+  }
+
+  @media (max-width: 768px) {
+    max-width: 280px;
+  }
 `;
 
 const SImg = styled.img`

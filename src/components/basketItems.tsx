@@ -10,6 +10,15 @@ import { Device, Types } from "../utils/types";
 const SPageWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  
+  @media (max-width: 1110px) {
+    justify-content: space-around;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const SCards = styled.div`
@@ -24,6 +33,10 @@ const SPageTitle = styled.h1`
   font-weight: 600;
   line-height: 24px;
   margin-bottom: 13px;
+
+  @media (max-width: 768px) {
+    margin-left: 10%;
+  }
 `;
 
 const BasketCards = observer(() => {

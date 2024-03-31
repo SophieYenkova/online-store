@@ -15,6 +15,21 @@ const SFooter = styled.footer`
   background-color: hsla(0, 0%, 100%, 1);
   border-radius: 30px 30px 0 0;
   box-shadow: 0px 0px 20px 0px hsla(0, 0%, 0%, 0.1);
+
+    
+  @media (max-width: 1110px) {
+    min-width: 100%;
+  }
+
+
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+    justify-content: space-around;
+    min-width: 100%;
+    position: static;
+    height: auto;
+  }
+
 `;
 
 const SNav = styled.nav`

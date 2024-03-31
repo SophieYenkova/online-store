@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import DeviceStore from "./store/DeviceStore.ts";
 import { createGlobalStyle } from 'styled-components'
-import { Device, Types } from "./utils/types.tsx";
 
 const Global = createGlobalStyle`
   *{
@@ -22,13 +21,11 @@ const Global = createGlobalStyle`
     height: 100%;
   }
 `
-interface Context {
-  null: object;
+export interface Context {
+  device: DeviceStore;
 }
 
-
-
-export const Context = createContext(null);
+export const Context = createContext<Context>({device: new DeviceStore()});
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
